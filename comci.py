@@ -45,6 +45,8 @@ def getSchoolNumber(schoolName):
         result.append(dic)
     return result
 def getTimeTable(schoolId, grade, cl, nextweek=False):
+    grade=int(grade)
+    cl=int(cl)
     nextweek=1+ +bool(nextweek)
     scdata = _scData()
     _base64 = (str(scdata) + str(schoolId) + "_0_"+str(nextweek)).encode("utf-8")
