@@ -82,3 +82,34 @@ def sortTable(timeTable):
         for ii in timeTable["시간표"][i]:
             result[i]+=ii+"\n"
     return "\n\n".join(result)
+if __name__=="__main__":
+        while True:
+                print("프로그램 종료: 0")
+                print("학교코드 검색: 1")
+                print("시간표 검색: 2")
+                print("다음주 시간표 검색: 3")
+                i=input()
+                if i=="1":
+                        m=input("학교명을 입력해주세요: ")
+                        print("\n".join(map(lambda a: a["name"]+" | "+str(a["number"]),getSchoolNumber(m))))
+                        input("계속하려면 엔터를 눌러주세요")
+                elif i=="2":
+                        try:
+                                m1=input("학교코드를 입력해주세요: ")
+                                m2=input("학년을 입력해주세요: ")
+                                m3=input("반을 입력해주세요: ")
+                                print(sortTable(getTimeTable(m1, m2, m3)))
+                        except:
+                                print("학교코드/학년/반을 잘못 입력했거나, 서버가 이상합니다.")
+                        input("계속하려면 엔터를 눌러주세요")
+                elif i=="3":
+                        try:
+                                m1=input("학교코드를 입력해주세요: ")
+                                m2=input("학년을 입력해주세요: ")
+                                m3=input("반을 입력해주세요: ")
+                                print(sortTable(getTimeTable(m1, m2, m3, nextweek=True)))
+                        except:
+                                print("학교코드/학년/반을 잘못 입력했거나, 서버가 이상합니다.")
+                        input("계속하려면 엔터를 눌러주세요")
+                elif i=="0":
+                        break
