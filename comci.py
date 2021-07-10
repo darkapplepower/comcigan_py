@@ -4,7 +4,8 @@ import re
 from urllib import parse
 import json
 import base64
-import math;
+import math
+import pip
 def _getHtml():
     result=requests.get("http://comci.kr:4082/st")
     result.encoding="euc-kr"
@@ -84,6 +85,12 @@ def sortTable(timeTable):
     return "\n\n".join(result)
 if __name__=="__main__":
         while True:
+                if hasattr(pip, 'main'):
+                        pip.main(['install', 'requests'])
+                        pip.main(['install', 'bs4'])
+                else:
+                        pip._internal.main(['install', 'requests'])
+                        pip.main(['install', 'bs4'])
                 print("프로그램 종료: 0")
                 print("학교코드 검색: 1")
                 print("시간표 검색: 2")
