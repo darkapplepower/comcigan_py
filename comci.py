@@ -84,13 +84,13 @@ def sortTable(timeTable):
             result[i]+=ii+"\n"
     return "\n\n".join(result)
 if __name__=="__main__":
-        while True:
-                if hasattr(pip, 'main'):
+        if hasattr(pip, 'main'):
                         pip.main(['install', 'requests'])
                         pip.main(['install', 'bs4'])
-                else:
-                        pip._internal.main(['install', 'requests'])
-                        pip.main(['install', 'bs4'])
+        else:
+                pip._internal.main(['install', 'requests'])
+                pip._internal.main(['install', 'bs4'])
+        while True:
                 print("프로그램 종료: 0")
                 print("학교코드 검색: 1")
                 print("시간표 검색: 2")
