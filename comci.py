@@ -62,9 +62,15 @@ def getTimeTable(schoolId, grade, cl, nextweek=False):
     result["시간표"] = [[], [], [], [], [], []]
     ordd, dad, th, sb, na=None, None, None, None, None
     for t in range(1,9):
-        for we in range(1,7):
-            ordd = data[zaryo[0]][grade][cl][we][t]
-            dad = data[zaryo[1]][grade][cl][we][t]
+        for we in range(1,6):
+            if len(data[zaryo[0]][grade][cl][we]) <= t:
+                ordd = 0
+            else:
+                ordd = data[zaryo[0]][grade][cl][we][t]
+            if len(data[zaryo[1]][grade][cl][we]) <= t:
+                dad = 0
+            else:
+                dad = data[zaryo[1]][grade][cl][we][t]
             th = math.floor(dad / 100)
             sb = dad - th * 100
             if dad > 100:
@@ -108,7 +114,7 @@ if __name__=="__main__":
                                 print(sortTable(getTimeTable(m1, m2, m3)))
                         except:
                                 print("학교코드/학년/반을 잘못 입력했거나, 서버가 이상합니다.")
-                        input("계속하려면 엔터를 눌러주세요")
+                                input("계속하려면 엔터를 눌러주세요")
                 elif i=="3":
                         try:
                                 m1=input("학교코드를 입력해주세요: ")
