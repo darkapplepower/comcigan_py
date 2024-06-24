@@ -7,7 +7,7 @@ import base64
 import math
 import pip
 def _getHtml():
-    result=requests.get("http://comci.kr:4082/st")
+    result=requests.get("http://comci.net:4082/st")
     result.encoding="euc-kr"
     result=BeautifulSoup(result.text, "html.parser")
     result=result.select("script")[1]
@@ -34,7 +34,7 @@ def _getUrl():
 def getSchoolNumber(schoolName):
     url = _getUrl()
     schoolName = parse.quote(schoolName, encoding="euc-kr")
-    data = requests.get("http://comci.kr:4082"+url+schoolName)
+    data = requests.get("http://comci.net:4082"+url+schoolName)
     data.encoding="utf-8"
     data=str(data.text)
     data = json.loads(data.replace("\0", ""))
@@ -53,7 +53,7 @@ def getTimeTable(schoolId, grade, cl, nextweek=False):
     _base64 = (str(scdata) + str(schoolId) + "_0_"+str(nextweek)).encode("utf-8")
     _base64=base64.b64encode(_base64)
     url = _getUrl()
-    data = requests.get("http://comci.kr:4082" + url.split("?")[0] + "?" + _base64.decode("utf-8"))
+    data = requests.get("http://comci.net:4082" + url.split("?")[0] + "?" + _base64.decode("utf-8"))
     data.encoding="utf-8"
     data = json.loads(str(data.text).replace("\0", ""))
     zaryo = _searchVariableName()
@@ -71,8 +71,11 @@ def getTimeTable(schoolId, grade, cl, nextweek=False):
                 dad = 0
             else:
                 dad = data[zaryo[1]][grade][cl][we][t]
-            th = math.floor(dad / 100)
-            sb = dad - th * 100
+            th = dad // data['분리'] if data['분리'] == 100 else dad % data['분리']
+            sb = dad % data['분리'] if data['분리'] == 100 else dad // data['분리']
+            ttt = sb // data['분리']
+            tt = '' if data['분리'] == 100 else (chr(t + 64) + "_" if ttt>= 1 and ttt <= 9 else '')
+            sb = sb % data['분리']
             if dad > 100:
                 if th < len(data[zaryo[3]]):
                     na = data[zaryo[4]][th][0:2]
